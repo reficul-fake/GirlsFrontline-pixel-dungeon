@@ -17,6 +17,8 @@ android {
             keyPassword keystoreProperties['keyPassword']
             storeFile file(keystoreProperties['storeFile'])
             storePassword keystoreProperties['storePassword']
+            v1SigningEnabled true   // 兼容老设备
+            v2SigningEnabled true   // 已有
         }
     }
     compileSdkVersion 29
@@ -25,6 +27,7 @@ android {
         resConfigs "en_US", "cs", "tr", "ca", "ko", "pl", "it",
                 "eo", "ru", "zh_CN", "de", "fr", "es", "pt", "fi", "hu", "in"
         minSdkVersion 21
+        targetSdkVersion 29
     }
     buildTypes {
         debug {
@@ -39,6 +42,11 @@ android {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.gpd
+        }
+    }
+    applicationVariants.all { variant ->
+        variant.outputs.all {
+            outputFileName = "gfpd.apk"
         }
     }
 }
