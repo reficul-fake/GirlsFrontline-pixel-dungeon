@@ -60,6 +60,8 @@ public class Game extends Activity implements GLSurfaceView.Renderer, View.OnTou
 
 	public static Game instance;
 
+	public static final int REQUEST_IMPORT_SAVE = 1001;
+
 	//actual size of the display
 	public static int dispWidth;
 	public static int dispHeight;
@@ -111,7 +113,6 @@ public class Game extends Activity implements GLSurfaceView.Renderer, View.OnTou
 	@Override
 	protected void onCreate( Bundle savedInstanceState ) {
 		super.onCreate( savedInstanceState );
-		
 		BitmapCache.context = TextureCache.context = instance = this;
 		
 		DisplayMetrics m = new DisplayMetrics();
@@ -421,4 +422,113 @@ public class Game extends Activity implements GLSurfaceView.Renderer, View.OnTou
 		void beforeCreate();
 		void afterCreate();
 	}
+
+	@Override
+    protected void onActivityResult(int requestCode, int resultCode, android.content.Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        
+        android.util.Log.d("GAME", "onActivityResult - requestCode: " + requestCode);
+        
+        if (requestCode == REQUEST_IMPORT_SAVE && resultCode == RESULT_OK) {
+            if (data != null) {
+                android.net.Uri uri = data.getData();
+                android.util.Log.d("GAME", "URI: " + uri);
+                
+                // 直接处理导入
+                handleSaveImport(uri);
+            }
+        }
+    }
+    
+    // 直接在这里处理导入逻辑
+    private void handleSaveImport(android.net.Uri uri) {
+        try {
+            android.util.Log.d("GAME", "Starting import from: " + uri);
+            
+            java.io.InputStream inputStream = getContentResolver().openInputStream(uri);
+            if (inputStream == null) {
+                android.util.Log.e("GAME", "Cannot open input stream");
+                return;
+            }
+            
+            java.io.File filesDir = getFilesDir();
+            java.util.zip.ZipInputStream zis = new java.util.zip.ZipInputStream(inputStream);
+            java.util.zip.ZipEntry entry;
+            int importedCount = 0;
+            
+            while ((entry = zis.getNextEntry()) != null) {
+                if (entry.getName().endsWith(".dat") && !entry.isDirectory()) {
+                    java.io.File destFile = new java.io.File(filesDir, entry.getName());
+                    
+                    // 创建目录
+                    java.io.File parentDir = destFile.getParentFile();
+                    if (parentDir != null && !parentDir.exists()) {
+                        parentDir.mkdirs();
+                    }
+                    
+                    // 写入文件
+                    java.io.FileOutputStream fos = new java.io.FileOutputStream(destFile);
+                    byte[] buffer = new byte[4096];
+                    int length;
+                    while ((length = zis.read(buffer)) > 0) {
+                        fos.write(buffer, 0, length);
+                    }
+                    fos.close();
+                    importedCount++;
+                    
+                    android.util.Log.d("GAME", "Imported: " + entry.getName());
+                }
+                zis.closeEntry();
+            }
+            zis.close();
+            inputStream.close();
+            
+            android.util.Log.d("GAME", "Import complete: " + importedCount + " files");
+            
+            if (importedCount > 0) {
+                // 导入成功，显示对话框并重启
+                showImportSuccessAndRestart(importedCount);
+            }
+            
+        } catch (Exception e) {
+            android.util.Log.e("GAME", "Import failed", e);
+        }
+    }
+    
+    private void showImportSuccessAndRestart(int count) {
+        android.util.Log.d("GAME", "Import successful, restarting app");
+        
+        try {
+            // 延迟 1 秒后重启
+            new java.util.Timer().schedule(new java.util.TimerTask() {
+                @Override
+                public void run() {
+                    restartApp();
+                }
+            }, 1000);
+            
+        } catch (Exception e) {
+            android.util.Log.e("GAME", "Failed to restart", e);
+        }
+    }
+    
+    private void restartApp() {
+        try {
+            android.content.Intent intent = getPackageManager()
+                .getLaunchIntentForPackage(getPackageName());
+            
+            if (intent != null) {
+                intent.addFlags(android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                intent.addFlags(android.content.Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.addFlags(android.content.Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
+            }
+            
+            finish();
+            System.exit(0);
+            
+        } catch (Exception e) {
+            android.util.Log.e("GAME", "Restart error", e);
+        }
+    }
 }

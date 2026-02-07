@@ -1,0 +1,10 @@
+{
+    "java.configuration.updateBuildConfiguration": "interactive",
+    "java.configuration.runtimes": [
+        {
+            "name": "JavaSE-1.8",
+            "path": "C:\\Users\\123\\scoop\\apps\\openjdk8-redhat\\current",
+            "default": true
+        }
+    ]
+}

@@ -5,6 +5,7 @@ android {
     ndkVersion '21.3.6528147'
     defaultConfig {
         minSdkVersion 21
+        targetSdkVersion 29
     }
     task ndkBuild(type: Exec) {
         description "builds JNI libs from source. " +
