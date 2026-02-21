@@ -29,6 +29,7 @@ import android.view.WindowManager;
 
 import com.gfpixel.gfpixeldungeon.scenes.PixelScene;
 import com.gfpixel.gfpixeldungeon.scenes.WelcomeScene;
+import com.gfpixel.gfpixeldungeon.utils.SaveDataManager;
 import com.watabou.noosa.Game;
 import com.watabou.noosa.RenderedText;
 import com.watabou.noosa.audio.Music;
@@ -39,6 +40,8 @@ import javax.microedition.khronos.opengles.GL10;
 
 public class GirlsFrontlinePixelDungeon extends Game {
 	
+	public static final int REQUEST_IMPORT_SAVE = 1001;
+
 	//variable constants for specific older versions of shattered, used for data conversion
 	//versions older than v0.6.0b are no longer supported, and data from them is ignored
 	public static final int v0_6_0b = 185;
@@ -450,5 +453,42 @@ public class GirlsFrontlinePixelDungeon extends Game {
 		}
 
 	}
-	
+
+	@Override
+    protected void onActivityResult(int requestCode, int resultCode, android.content.Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        
+        // android.util.Log.d("GAME", "onActivityResult - requestCode: " + requestCode);
+        
+        if (requestCode == REQUEST_IMPORT_SAVE && resultCode == RESULT_OK) {
+            if (data != null) {
+                android.net.Uri uri = data.getData();
+                // android.util.Log.d("GAME", "URI: " + uri);
+				SaveDataManager.onImportFileSelected(data.getData());
+                
+                // 直接处理导入
+                // handleSaveImport(uri);
+            }
+        }
+    }
+
+    public static void restartApp() {
+        try {
+            android.content.Intent intent = instance.getPackageManager()
+                .getLaunchIntentForPackage(instance.getPackageName());
+            
+            if (intent != null) {
+                intent.addFlags(android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                intent.addFlags(android.content.Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.addFlags(android.content.Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                instance.startActivity(intent);
+            }
+            
+            instance.finish();
+            System.exit(0);
+            
+        } catch (Exception e) {
+            android.util.Log.e("GAME", "Restart error", e);
+        }
+    }
 }

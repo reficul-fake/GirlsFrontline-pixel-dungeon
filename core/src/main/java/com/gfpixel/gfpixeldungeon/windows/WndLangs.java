@@ -24,6 +24,7 @@ package com.gfpixel.gfpixeldungeon.windows;
 import com.gfpixel.gfpixeldungeon.GirlsFrontlinePixelDungeon;
 import com.gfpixel.gfpixeldungeon.SPDSettings;
 import com.gfpixel.gfpixeldungeon.messages.Languages;
+import com.gfpixel.gfpixeldungeon.utils.SaveDataManager;
 import com.gfpixel.gfpixeldungeon.messages.Messages;
 import com.gfpixel.gfpixeldungeon.scenes.PixelScene;
 import com.gfpixel.gfpixeldungeon.scenes.TitleScene;
@@ -104,6 +105,47 @@ public class WndLangs extends Window {
 
 			add(btn);
 		}
+
+		y += 3;
+		
+		RedButton exportBtn = new RedButton("export"){
+			@Override
+			protected void onClick() {
+				super.onClick();
+				SaveDataManager.exportSaveData();
+			}
+		};
+		exportBtn.setSize(BTN_WIDTH, BTN_HEIGHT);
+		if (SPDSettings.landscape()){
+			exportBtn.setPos(0, y);
+		} else {
+			exportBtn.setPos(0, y);
+		}
+		add(exportBtn);
+		
+		RedButton importBtn = new RedButton("import"){
+			@Override
+			protected void onClick() {
+				super.onClick();
+				SaveDataManager.importSaveData();
+			}
+		};
+		importBtn.setSize(BTN_WIDTH, BTN_HEIGHT);
+		if (SPDSettings.landscape()){
+			importBtn.setPos(BTN_WIDTH+1, y);
+		} else {
+			y += BTN_HEIGHT + 1;
+			importBtn.setPos(0, y);
+		}
+		add(importBtn);
+		
+		if (!SPDSettings.landscape()){
+			y += BTN_HEIGHT + 1;
+		} else {
+			y += BTN_HEIGHT + 1;
+		}
+		// ===== 按钮添加结束 =====
+
 		y = Math.max(MIN_HEIGHT, y);
 		resize(SPDSettings.landscape() ? WIDTH_L : WIDTH_P, y);
 

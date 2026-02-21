@@ -22,9 +22,12 @@ local.properties
 # intellij project files
 *.iml
 *.idea
+readme.txt
+.vscode/
 
 # Apk Key file
 keystore.properties
+fake.keystore
 *.jks
 
 # PhotoShop

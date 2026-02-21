@@ -115,7 +115,7 @@ public class TextureFilm {
 	}
 	
 	public float width( RectF frame ) {
-		return frame.width() * texWidth;
+		return round(frame.width() * texWidth);
 	}
 
 	public float height( Object id ){

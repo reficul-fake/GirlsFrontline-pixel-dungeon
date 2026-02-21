@@ -77,7 +77,6 @@ import com.gfpixel.gfpixeldungeon.items.weapon.melee.MG.Mg42;
 import com.gfpixel.gfpixeldungeon.items.weapon.melee.MG.Negev;
 import com.gfpixel.gfpixeldungeon.items.weapon.melee.Thunder;
 import com.gfpixel.gfpixeldungeon.items.weapon.melee.SMG.Ump45;
-import com.gfpixel.gfpixeldungeon.items.weapon.melee.SA.UMP9;
 import com.gfpixel.gfpixeldungeon.items.weapon.missiles.Boomerang;
 import com.gfpixel.gfpixeldungeon.items.weapon.missiles.ThrowingKnife;
 import com.gfpixel.gfpixeldungeon.items.weapon.missiles.ThrowingStone;
@@ -245,13 +244,13 @@ public enum HeroClass {
 
 		ThrowingKnife knives = new ThrowingKnife();
 		knives.quantity(3).collect();
-		new M2HB().identify().collect();
-		new Lvoat1().identify().collect();
-		new Lvoat3().identify().collect();
-		new Lvoat2().identify().collect();
-		new Ntw20().identify().collect();
-		new PotionOfStrength().identify().quantity(12).collect();
-		new M1903().identify().upgrade(3).collect();
+		// new M2HB().identify().collect();
+		// new Lvoat1().identify().collect();
+		// new Lvoat3().identify().collect();
+		// new Lvoat2().identify().collect();
+		// new Ntw20().identify().collect();
+		// new PotionOfStrength().identify().quantity(12).collect();
+		// new M1903().identify().upgrade(3).collect();
 
 		Dungeon.quickslot.setSlot(0, cloak);
 		Dungeon.quickslot.setSlot(1, knives);

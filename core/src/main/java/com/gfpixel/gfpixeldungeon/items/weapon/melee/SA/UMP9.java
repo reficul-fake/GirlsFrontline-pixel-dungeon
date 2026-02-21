@@ -30,10 +30,8 @@ import com.watabou.utils.Random;
 public class UMP9 extends SurpriseAttack {
 
     {
-        image = ItemSpriteSheet.UMP9;
-
+        image = ItemSpriteSheet.M1911;
         tier = 1;
-
         bones = false;
     }
 
@@ -63,5 +61,4 @@ public class UMP9 extends SurpriseAttack {
         }
         return super.damageRoll(owner);
     }
-
 }

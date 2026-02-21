@@ -60,27 +60,27 @@ public abstract class BeamChargeMob extends Mob implements BeamChargeAttackInter
     }
 
     @Override
-    protected boolean doAttack( Char enemy ) {
-
+    protected boolean doAttack(Char enemy) {
         boolean visible = Dungeon.level.heroFOV[pos];
 
         if (chargeManager.isCharged()) {
             if (visible && sprite instanceof BeamChargeMobSprite) {
-                sprite.attack( chargeManager.beamTarget );
+                sprite.attack(chargeManager.beamTarget);
             } else {
                 chargeManager.shootBeam();
             }
         } else {
             if (visible && sprite instanceof BeamChargeMobSprite) {
-                ((BeamChargeMobSprite)sprite).charge( chargeManager.beamTarget );
+                ((BeamChargeMobSprite) sprite).charge(chargeManager.beamTarget);
             } else {
                 chargeManager.increaseCharge();
             }
         }
 
-        spend( attackDelay() );
+        spend(attackDelay());
 
-        return !visible;
+        // visible 且是正确 sprite 类型才等回调，否则直接结束行动
+        return !(visible && sprite instanceof BeamChargeMobSprite);
     }
 
     // 근접공격을 불가능하게 하기 위하여 부모의 메소드를 호출하지 않도록 수정

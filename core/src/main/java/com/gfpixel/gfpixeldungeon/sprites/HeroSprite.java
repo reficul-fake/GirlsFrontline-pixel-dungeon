@@ -161,12 +161,15 @@ public class HeroSprite extends CharSprite {
 	}
 	
 	public static Image avatar( HeroClass cl, int armorTier ) {
+		int tierIndex = armorTier > 0 ? armorTier - 1 : 0;
+    
+		RectF patch = tiers().get(tierIndex);
+		if (patch == null) patch = tiers().get(0);
 		
-		RectF patch = tiers().get( armorTier );
-		Image avatar = new Image( cl.spritesheet() );
-		RectF frame = avatar.texture.uvRect( 1, 0, FRAME_WIDTH, FRAME_HEIGHT );
-		frame.shift( patch.left, patch.top );
-		avatar.frame( frame );
+		Image avatar = new Image(cl.spritesheet());
+		RectF frame = avatar.texture.uvRect(1, 0, FRAME_WIDTH, FRAME_HEIGHT);
+		frame.shift(patch.left, patch.top);
+		avatar.frame(frame);
 		
 		return avatar;
 	}

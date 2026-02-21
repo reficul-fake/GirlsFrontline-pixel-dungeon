@@ -26,7 +26,6 @@ import android.os.Build;
 
 import com.watabou.glscripts.Script;
 import com.watabou.glwrap.Attribute;
-import com.watabou.glwrap.FroyoGLES20Fix;
 import com.watabou.glwrap.Quad;
 import com.watabou.glwrap.Uniform;
 import com.watabou.glwrap.Vertexbuffer;
@@ -97,8 +96,6 @@ public class NoosaScript extends Script {
 
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.GINGERBREAD) {
 			GLES20.glDrawElements( GLES20.GL_TRIANGLES, Quad.SIZE, GLES20.GL_UNSIGNED_SHORT, 0 );
-		} else {
-			FroyoGLES20Fix.glDrawElements( GLES20.GL_TRIANGLES, Quad.SIZE, GLES20.GL_UNSIGNED_SHORT, 0 );
 		}
 		
 	}
@@ -116,8 +113,6 @@ public class NoosaScript extends Script {
 
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.GINGERBREAD) {
 			GLES20.glDrawElements( GLES20.GL_TRIANGLES, Quad.SIZE, GLES20.GL_UNSIGNED_SHORT, 0 );
-		} else {
-			FroyoGLES20Fix.glDrawElements( GLES20.GL_TRIANGLES, Quad.SIZE, GLES20.GL_UNSIGNED_SHORT, 0 );
 		}
 	}
 	
@@ -135,8 +130,6 @@ public class NoosaScript extends Script {
 
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.GINGERBREAD) {
 			GLES20.glDrawElements( GLES20.GL_TRIANGLES, Quad.SIZE * size, GLES20.GL_UNSIGNED_SHORT, 0 );
-		} else {
-			FroyoGLES20Fix.glDrawElements( GLES20.GL_TRIANGLES, Quad.SIZE * size, GLES20.GL_UNSIGNED_SHORT, 0 );
 		}
 		
 	}
@@ -158,8 +151,6 @@ public class NoosaScript extends Script {
 
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.GINGERBREAD) {
 			GLES20.glDrawElements( GLES20.GL_TRIANGLES, Quad.SIZE * length, GLES20.GL_UNSIGNED_SHORT, Quad.SIZE * Short.SIZE/8 * offset );
-		} else {
-			FroyoGLES20Fix.glDrawElements( GLES20.GL_TRIANGLES, Quad.SIZE * length, GLES20.GL_UNSIGNED_SHORT, Quad.SIZE * Short.SIZE/8 * offset );
 		}
 	}
 	
