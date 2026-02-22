@@ -37,7 +37,7 @@ public class NemeumSprite extends BeamChargeMobSprite {
         idle = new Animation( 4, true );
         idle.frames( frames, 0 );
 
-        charging = new Animation( 14, true);
+        charging = new Animation( 14, false);
         charging.frames( frames, 2);
 
         chargeParticles = centerEmitter();

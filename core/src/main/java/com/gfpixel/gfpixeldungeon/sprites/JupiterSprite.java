@@ -37,7 +37,7 @@ public class JupiterSprite extends BeamChargeMobSprite {
         idle = new Animation( 8, true );
         idle.frames( frames, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 1, 0, 0, 0, 0, 0 );
 
-        charging = new Animation( 12, true);
+        charging = new Animation( 12, false);
         charging.frames( frames, 3 );
 
         chargeParticles = centerEmitter();
